@@ -93,6 +93,8 @@ describe('ReactComponentTreeDevtool', () => {
       return getTree(rootInstance._debugID, options).children[0];
     }
 
+    // Mount once, render updates, then unmount.
+    // Ensure the tree is correct on every step.
     pairs.forEach(([element, expectedTree]) => {
       currentElement = element;
       ReactDOM.render(<Wrapper />, node);
@@ -101,17 +103,17 @@ describe('ReactComponentTreeDevtool', () => {
       expect(getActualTree()).toEqual(expectedTree);
     });
     ReactDOM.unmountComponentAtNode(node);
-
     ReactComponentTreeDevtool.purgeUnmountedComponents();
     expect(getActualTree()).toBe(undefined);
     expect(getRootDisplayNames()).toEqual([]);
     expect(getRegisteredDisplayNames()).toEqual([]);
 
+    // Server render every pair.
+    // Ensure the tree is correct on every step.
     pairs.forEach(([element, expectedTree]) => {
       currentElement = element;
       ReactDOMServer.renderToString(<Wrapper />);
       expect(getActualTree()).toEqual(expectedTree);
-
       ReactComponentTreeDevtool.purgeUnmountedComponents();
       expect(getActualTree()).toBe(undefined);
       expect(getRootDisplayNames()).toEqual([]);
