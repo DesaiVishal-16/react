@@ -16,6 +16,8 @@ var RCTUIManager = {
   setChildren: jest.fn(),
   manageChildren: jest.fn(),
   updateView: jest.fn(),
+  removeSubviewsFromContainerWithID: jest.fn(),
+  replaceExistingNonRootView: jest.fn(),
 };
 
 module.exports = RCTUIManager;
