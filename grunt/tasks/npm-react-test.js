@@ -13,7 +13,7 @@ function buildRelease() {
     grunt.file.delete(dest);
   }
 
-  // Copy to build/packages/react-native-renderer
+  // Copy to build/packages/react-test-renderer
   var mappings = [].concat(
     grunt.file.expandMapping('**/*', dest, {cwd: src}),
     grunt.file.expandMapping('**/*', lib, {cwd: modSrc}),
