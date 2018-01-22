@@ -28,8 +28,11 @@ import ReactNativeFiberRenderer from './ReactNativeFiberRenderer';
 import ReactNativePropRegistry from './ReactNativePropRegistry';
 import {getInspectorDataForViewTag} from './ReactNativeFiberInspector';
 import createReactNativeComponentClass from './createReactNativeComponentClass';
+import {injectFindHostInstance} from './findNodeHandle';
 import findNumericNodeHandle from './findNumericNodeHandle';
 import takeSnapshot from './takeSnapshot';
+
+injectFindHostInstance(ReactNativeFiberRenderer.findHostInstance);
 
 ReactGenericBatching.injection.injectFiberBatchedUpdates(
   ReactNativeFiberRenderer.batchedUpdates,
