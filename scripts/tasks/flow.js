@@ -12,7 +12,10 @@ const spawn = require('child_process').spawn;
 
 const extension = process.platform === 'win32' ? '.cmd' : '';
 
-spawn(path.join('node_modules', '.bin', 'flow' + extension), ['check', '.'], {
+// This script is using `flow status` for a quick check with a server.
+// Use it for local development.
+
+spawn(path.join('node_modules', '.bin', 'flow' + extension), ['status', '.'], {
   // Allow colors to pass through
   stdio: 'inherit',
 }).on('close', function(code) {
