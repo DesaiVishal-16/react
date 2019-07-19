@@ -8,25 +8,7 @@
 
 import type {ReactEventResponder, ReactEventComponent} from 'shared/ReactTypes';
 import {REACT_EVENT_COMPONENT_TYPE} from 'shared/ReactSymbols';
-
-let hasBadMapPolyfill;
-
-if (__DEV__) {
-  hasBadMapPolyfill = false;
-  try {
-    const frozenObject = Object.freeze({});
-    const testMap = new Map([[frozenObject, null]]);
-    const testSet = new Set([frozenObject]);
-    // This is necessary for Rollup to not consider these unused.
-    // https://github.com/rollup/rollup/issues/1771
-    // TODO: we can remove these if Rollup fixes the bug.
-    testMap.set(0, 0);
-    testSet.add(0);
-  } catch (e) {
-    // TODO: Consider warning about bad polyfills
-    hasBadMapPolyfill = true;
-  }
-}
+import {hasBadMapPolyfill} from './hasBadMapPolyfill';
 
 export default function createEventComponent<E, C>(
   responder: ReactEventResponder<E, C>,
@@ -39,7 +21,7 @@ export default function createEventComponent<E, C>(
   }
   const eventComponent = {
     $$typeof: REACT_EVENT_COMPONENT_TYPE,
-    responder: responder,
+    responder,
   };
   if (__DEV__) {
     Object.freeze(eventComponent);
