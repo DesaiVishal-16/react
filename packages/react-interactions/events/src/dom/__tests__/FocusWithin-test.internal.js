@@ -31,9 +31,10 @@ const initializeModules = hasPointerEvents => {
   // TODO: This import throws outside of experimental mode. Figure out better
   // strategy for gated imports.
   if (__EXPERIMENTAL__) {
-    FocusWithinResponder = require('react-interactions/events/focus')
+    FocusWithinResponder = require('react-interactions/events/deprecated-focus')
       .FocusWithinResponder;
-    useFocusWithin = require('react-interactions/events/focus').useFocusWithin;
+    useFocusWithin = require('react-interactions/events/deprecated-focus')
+      .useFocusWithin;
   }
 };
 
