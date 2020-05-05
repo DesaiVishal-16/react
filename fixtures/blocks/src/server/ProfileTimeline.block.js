@@ -15,7 +15,7 @@ import {fetch} from 'react-data/fetch';
 import PostList from './PostList';
 
 function load(userId) {
-  const postsByUser = fetch(`/posts?userId=${userId}`).json();
+  const postsByUser = fetch(`/posts?userId=${userId}&_expand=user`).json();
   return {
     posts: <PostList posts={postsByUser} />,
   };
@@ -24,12 +24,7 @@ function load(userId) {
 // Client
 
 function ProfileTimeline(props, data) {
-  return (
-    <>
-      <h3>Timeline</h3>
-      {data.posts}
-    </>
-  );
+  return <>{data.posts}</>;
 }
 
 export default block(ProfileTimeline, load);
