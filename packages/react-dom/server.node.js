@@ -14,4 +14,4 @@ export {
   renderToNodeStream,
   renderToStaticNodeStream,
   version,
-} from './src/server/ReactDOMServerNode';
+} from './src/server/ReactDOMLegacyServerNode';
