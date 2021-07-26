@@ -100,6 +100,8 @@ export class ReactEventsView extends View {
     let fillStyle = null;
 
     switch (type) {
+      case 'native-event':
+        return;
       case 'schedule-render':
       case 'schedule-state-update':
       case 'schedule-force-update':
@@ -140,7 +142,7 @@ export class ReactEventsView extends View {
   draw(context: CanvasRenderingContext2D) {
     const {
       frame,
-      _profilerData: {events},
+      _profilerData: {reactEvents},
       _hoveredEvent,
       visibleArea,
     } = this;
@@ -162,7 +164,7 @@ export class ReactEventsView extends View {
 
     const highlightedEvents: ReactEvent[] = [];
 
-    events.forEach(event => {
+    reactEvents.forEach(event => {
       if (
         event === _hoveredEvent ||
         (_hoveredEvent &&
@@ -236,7 +238,7 @@ export class ReactEventsView extends View {
     }
 
     const {
-      _profilerData: {events},
+      _profilerData: {reactEvents},
     } = this;
     const scaleFactor = positioningScaleFactor(
       this._intrinsicSize.width,
@@ -250,8 +252,8 @@ export class ReactEventsView extends View {
 
     // Because data ranges may overlap, we want to find the last intersecting item.
     // This will always be the one on "top" (the one the user is hovering over).
-    for (let index = events.length - 1; index >= 0; index--) {
-      const event = events[index];
+    for (let index = reactEvents.length - 1; index >= 0; index--) {
+      const event = reactEvents[index];
       const {timestamp} = event;
 
       if (
