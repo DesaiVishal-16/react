@@ -7,4 +7,4 @@
  * @flow
  */
 
-export * from './src/ReactFlightDOMClient';
+throw new Error('Use react-server-dom-webpack/client instead.');
