@@ -12,18 +12,19 @@ import type {HostDispatcher} from './shared/ReactDOMTypes';
 
 import {NoEventPriority} from 'react-reconciler/src/ReactEventPriorities';
 
-type InternalsType = {
-  usingClientEntryPoint: boolean,
-  Events: [any, any, any, any, any, any],
-  ReactDOMCurrentDispatcher: {
-    current: HostDispatcher,
-  },
+type ReactDOMInternals = {
+  d /* ReactDOMCurrentDispatcher */: HostDispatcher,
+  p /* currentUpdatePriority */: EventPriority,
   findDOMNode:
     | null
     | ((
         componentOrElement: React$Component<any, any>,
       ) => null | Element | Text),
-  up /* currentUpdatePriority */: EventPriority,
+  usingClientEntryPoint: boolean,
+};
+
+export type ReactDOMInternalsDev = ReactDOMInternals & {
+  usingClientEntryPoint: boolean,
 };
 
 function noop() {}
@@ -39,14 +40,15 @@ const DefaultDispatcher: HostDispatcher = {
   preinitModuleScript: noop,
 };
 
-const Internals: InternalsType = {
-  usingClientEntryPoint: false,
-  Events: (null: any),
-  ReactDOMCurrentDispatcher: {
-    current: DefaultDispatcher,
-  },
+const Internals: ReactDOMInternals = {
+  d /* ReactDOMCurrentDispatcher */: DefaultDispatcher,
+  p /* currentUpdatePriority */: NoEventPriority,
   findDOMNode: null,
-  up /* currentUpdatePriority */: NoEventPriority,
+  usingClientEntryPoint: false,
 };
+
+// if (__DEV__) {
+//   (Internals: any).usingClientEntryPoint = false;
+// }
 
 export default Internals;

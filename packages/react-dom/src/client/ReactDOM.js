@@ -34,16 +34,7 @@ import {createPortal as createPortalImpl} from 'react-reconciler/src/ReactPortal
 import {canUseDOM} from 'shared/ExecutionEnvironment';
 import ReactVersion from 'shared/ReactVersion';
 
-import {
-  getClosestInstanceFromNode,
-  getInstanceFromNode,
-  getNodeFromInstance,
-  getFiberCurrentPropsFromNode,
-} from 'react-dom-bindings/src/client/ReactDOMComponentTree';
-import {
-  enqueueStateRestore,
-  restoreStateIfNeeded,
-} from 'react-dom-bindings/src/events/ReactDOMControlledComponent';
+import {getClosestInstanceFromNode} from 'react-dom-bindings/src/client/ReactDOMComponentTree';
 import Internals from '../ReactDOMSharedInternals';
 
 export {
@@ -97,7 +88,7 @@ function createRoot(
   options?: CreateRootOptions,
 ): RootType {
   if (__DEV__) {
-    if (!Internals.usingClientEntryPoint && !__UMD__) {
+    if (!(Internals: any).usingClientEntryPoint && !__UMD__) {
       console.error(
         'You are importing createRoot from "react-dom" which is not supported. ' +
           'You should instead import it from "react-dom/client".',
@@ -113,7 +104,7 @@ function hydrateRoot(
   options?: HydrateRootOptions,
 ): RootType {
   if (__DEV__) {
-    if (!Internals.usingClientEntryPoint && !__UMD__) {
+    if (!(Internals: any).usingClientEntryPoint && !__UMD__) {
       console.error(
         'You are importing hydrateRoot from "react-dom" which is not supported. ' +
           'You should instead import it from "react-dom/client".',
@@ -176,17 +167,6 @@ export {
   // This should only be used by React internals.
   runWithPriority as unstable_runWithPriority,
 };
-
-// Keep in sync with ReactTestUtils.js.
-// This is an array for better minification.
-Internals.Events = [
-  getInstanceFromNode,
-  getNodeFromInstance,
-  getFiberCurrentPropsFromNode,
-  enqueueStateRestore,
-  restoreStateIfNeeded,
-  unstable_batchedUpdates,
-];
 
 const foundDevTools = injectIntoDevTools({
   findFiberByHostInstance: getClosestInstanceFromNode,
