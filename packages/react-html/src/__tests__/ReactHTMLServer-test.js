@@ -38,6 +38,44 @@ describe('ReactHTML', () => {
     expect(html).toBe('<div>hello world</div>');
   });
 
+  it('should error on useState', async () => {
+    function Component() {
+      const [state] = React.useState('hello');
+      // We can't use JSX because that's client-JSX in our tests.
+      return React.createElement('div', null, state);
+    }
+
+    await expect(async () => {
+      await ReactHTML.renderToMarkup(React.createElement(Component));
+    }).rejects.toThrow();
+  });
+
+  it('should error on refs passed to host components', async () => {
+    function Component() {
+      const ref = React.createRef();
+      // We can't use JSX because that's client-JSX in our tests.
+      return React.createElement('div', {ref});
+    }
+
+    await expect(async () => {
+      await ReactHTML.renderToMarkup(React.createElement(Component));
+    }).rejects.toThrow();
+  });
+
+  it('should error on callbacks passed to event handlers', async () => {
+    function Component() {
+      function onClick() {
+        // This won't be able to be called.
+      }
+      // We can't use JSX because that's client-JSX in our tests.
+      return React.createElement('div', {onClick});
+    }
+
+    await expect(async () => {
+      await ReactHTML.renderToMarkup(React.createElement(Component));
+    }).rejects.toThrow();
+  });
+
   it('supports the useId Hook', async () => {
     function Component() {
       const firstNameId = React.useId();
