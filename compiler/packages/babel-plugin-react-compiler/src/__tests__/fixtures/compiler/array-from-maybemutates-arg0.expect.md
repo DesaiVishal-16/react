@@ -7,7 +7,7 @@ import {mutateAndReturn, Stringify, useIdentity} from 'shared-runtime';
 function Component({value}) {
   const arr = [{value: 'foo'}, {value: 'bar'}, {value}];
   useIdentity();
-  const derived = Array.from(arr, mutateAndReturn);
+  const derived = Array.from(arr).map(mutateAndReturn);
   return (
     <Stringify>
       {derived.at(0)}
@@ -19,7 +19,7 @@ function Component({value}) {
 export const FIXTURE_ENTRYPOINT = {
   fn: Component,
   params: [{value: 5}],
-  sequentialRenders: [{value: 5}, {value: 6}, {value: 6}],
+  sequentialRenders: [{value: 5}, {value: 6}, {value: 6}, {value: 7}],
 };
 
 ```
@@ -35,7 +35,7 @@ function Component(t0) {
   const { value } = t0;
   const arr = [{ value: "foo" }, { value: "bar" }, { value }];
   useIdentity();
-  const derived = Array.from(arr, mutateAndReturn);
+  const derived = Array.from(arr).map(mutateAndReturn);
   let t1;
   if ($[0] !== derived) {
     t1 = derived.at(0);
@@ -72,7 +72,7 @@ function Component(t0) {
 export const FIXTURE_ENTRYPOINT = {
   fn: Component,
   params: [{ value: 5 }],
-  sequentialRenders: [{ value: 5 }, { value: 6 }, { value: 6 }],
+  sequentialRenders: [{ value: 5 }, { value: 6 }, { value: 6 }, { value: 7 }],
 };
 
 ```
@@ -81,3 +81,4 @@ export const FIXTURE_ENTRYPOINT = {
 (kind: ok) <div>{"children":[{"value":"foo","wat0":"joe"},{"value":5,"wat0":"joe"}]}</div>
 <div>{"children":[{"value":"foo","wat0":"joe"},{"value":6,"wat0":"joe"}]}</div>
 <div>{"children":[{"value":"foo","wat0":"joe"},{"value":6,"wat0":"joe"}]}</div>
+<div>{"children":[{"value":"foo","wat0":"joe"},{"value":7,"wat0":"joe"}]}</div>
