@@ -4,7 +4,12 @@ function Component({value}) {
   const arr = [{value: 'foo'}, {value: 'bar'}, {value}];
   useIdentity();
   const derived = Array.from(arr, mutateAndReturn);
-  return <Stringify>{derived.at(-1)}</Stringify>;
+  return (
+    <Stringify>
+      {derived.at(0)}
+      {derived.at(-1)}
+    </Stringify>
+  );
 }
 
 export const FIXTURE_ENTRYPOINT = {
